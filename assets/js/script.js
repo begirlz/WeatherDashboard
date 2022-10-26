@@ -17,7 +17,7 @@ const kevlinToFahrenheit = tempKel => tempKel - 255.372; // -255.372 kelvin = 0 
 // Display 5 days of data
 function FiveDayWeather(selectedCity, strLat, strLon) {
 
-    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + strLat + '&lon=' + strLon + '&exclude=hourly,daily' + '&appid=' + apiKey;
+    var weatherUrl = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + strLat + '&lon=' + strLon + '&exclude=hourly,daily' + '&appid=' + apiKey;
 
     fetch(weatherUrl)
         .then(function (resp) {
@@ -73,7 +73,7 @@ function defaultWeather(selectedCity, strLat, strLon) {
     var city = selectedCity.split(',');
     currentCityinfo.text(city[0] + ',' + city[1] + ', ' + todayDate);
 
-    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + strLat + '&lon=' + strLon + '&appid=' + apiKey;
+    var weatherUrl = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + strLat + '&lon=' + strLon + '&appid=' + apiKey;
 
     fetch(weatherUrl)
         .then(function (resp) {
