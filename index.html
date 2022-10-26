@@ -15,11 +15,12 @@
 </head>
 
 <body>
-    <header class="bg-primary w-100 p-2 text-center">
+    <header class="bg-info w-100 p-2 text-center">
         <h1>Weather Dashboard</h1>
     </header>
-    <main class="row col-10">
-        <div class="container-fluid col-4 pr-lg-5" id="searchContainer">
+    <main>
+        <div class="d-flex flex-row col-12 align-items-center text-center justify-content-center">
+            <div class="container-fluid col-4 pr-lg-5 w-100" id="searchContainer">
                 <form id="searchForm">
                     <label for="searchText">
                         <span class="font-weight-bold align-content-center justify-content-center h3">Search for a
@@ -34,28 +35,30 @@
                 <hr>
                 <div id="prevSearch">
                 </div>
-        </div>
-        <div class="container-fluid col-8" id="forcastContent">
-
-                <div class="row w-100 h-100 p-4 text-left" id="todayForcast">
-                    <h2 id="currentCityinfo"></h2>
-                    <img id="currentIcon">
+            </div>
+            <div class="container-fluid col-8" id="forcastContent">
+                <div class="row w-100 h-100 p-4" id="todayForcast">
+                    <h2 id="currentCityinfo" class="bg-info w-100 rounded-lg"></h2>
+                    <div class="row w-100">
+                        <img id="currentIcon">
+                    </div>
                     <div id="currentTemp" class="row w-100"></div>
                     <div id="currentWind" class="row w-100"></div>
                     <div id="currentHumidity" class="row w-100"></div>
                 </div>
                 <div class="row" id="fiveDayForcast">
                     <h1>5-Day Forcast:</h1>
-                    <div class="row w-100 align-content-around">
-                        <div class="col-2 w-100 bg-info" id="1"></div>
-                        <div class="col-2 w-100" id="2"></div>
-                        <div class="col-2 w-100 bg-info" id="3"></div>
-                        <div class="col-2 w-100" id="4"></div>
-                        <div class="col-2 w-100 bg-info" id="5"></div>
+                    <div class="row w-100 justify-content-between">
+                        <div class=" col-2 w-100 bg-info rounded-lg" id="1"></div>
+                        <div class=" col-2 w-100" id="2"></div>
+                        <div class=" col-2 w-100 bg-info rounded-lg" id="3"></div>
+                        <div class=" col-2 w-100" id="4"></div>
+                        <div class=" col-2 w-100 bg-info rounded-lg" id="5"></div>
                     </div>
-                    
+
                 </div>
 
+            </div>
         </div>
     </main>
 
