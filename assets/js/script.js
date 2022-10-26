@@ -11,16 +11,15 @@ var lat = 33.3062;
 var lon = -111.8413;
 var currentCity = 'Chandler,Arizona,US';
 
-
-
 var todayDate = moment().format('L');
 const kevlinToFahrenheit = tempKel => tempKel - 255.372; // -255.372 kelvin = 0 deg Fahrenheit
 
-function FiveDayWeather(currentCity, lat, lon){
+// Display 5 days of data
+function FiveDayWeather(currentCity, lat, lon) {
     var city = currentCity.split(',');
     currentCityinfo.text(city[0] + ',' + city[1] + ', ' + todayDate);
 
-    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon  +  '&exclude=hourly,daily'+ '&appid=' +apiKey;
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&exclude=hourly,daily' + '&appid=' + apiKey;
 
     fetch(weatherUrl)
         .then(function (resp) {
@@ -28,47 +27,41 @@ function FiveDayWeather(currentCity, lat, lon){
         })
         .then(function (data) {
 
-            console.log(data);
             var dataList = data.list;
 
-                //console.log(dataList[0].dt_txt);
-                //var m = moment(new Date(dataList[0].dt_txt));
-                //console.log(m.format('DD'));//todayDate
-                //console.log(moment(new Date(todayDate)).format('DD'));
-                var tDate = moment(new Date(todayDate)).format('DD');
+            var tDate = moment(new Date(todayDate)).format('DD');
 
-            for (var i = 0; i <dataList.length; i++) {
-                var nextDate = moment(new Date(dataList[i].dt_txt)).format('DD');
-                if (nextDate !== tDate) {
+                var id =1;
+                
+                for (var i = 0; i < dataList.length; i++) {
+                    var nextDate = moment(new Date(dataList[i].dt_txt)).format('DD');                       
+                    $('#' + id).empty();
 
-                    var weatherData = dataList[i].main;
-                    var windSpeed = dataList[i].wind;
-                    var dataIcon = dataList[i].weather;
+                    if (nextDate !== tDate) {
 
-                    console.log(nextDate);
-                    tDate=nextDate;
+                        var weatherData = dataList[i].main;
+                        
+                        var windSpeed = dataList[i].wind;
+                        
+                        var dataIcon = dataList[i].weather;
+                        
+                        var iconUrl = 'http://openweathermap.org/img/wn/' + dataIcon[0].icon + '@2x.png';
+                                                
+                        var temp = Math.round(kevlinToFahrenheit(weatherData.temp)).toFixed(2);
+                        var dayDate = moment(new Date(dataList[i].dt_txt)).format('dddd');
+
+                        $('#' + id).append($('<div>').text(dayDate));
+                        $('#' + id).append($('<img>').attr('src',iconUrl));
+                        $('#' + id).append($('<div>').text('Temp: ' + temp + '\u00B0 F'));
+                        $('#' + id).append($('<div>').text('Wind: ' + windSpeed.speed + ' MPH'));
+                        $('#' + id).append($('<div>').text('Humidity: ' + weatherData.humidity + ' %'));
+                        
+                        tDate = nextDate;
+                        id++;
+                    }
+
+
                 }
-
-                
-                var weatherData = dataList[0].main;
-                var windSpeed = dataList[0].wind;
-                var dataIcon = dataList[0].weather;
-                var iconUrl = 'http://openweathermap.org/img/wn/' + dataIcon[0].icon + '@2x.png';
-    
-                //console.log(data);
-                var temp = Math.round(kevlinToFahrenheit(weatherData.temp)).toFixed(2);
-                
-                $('#' + i).append($('<div>').text('Temp: ' + temp + '\u00B0 F'));
-                $('#' + i).append($('<div>').text('Wind: ' + windSpeed.speed + ' MPH'));
-                $('#' + i).append($('<div>').text('Humidity: ' + weatherData.humidity + ' %'));
-                $('#' + i).append($('<div>').text('Temp: ' + temp + '\u00B0 F'));
-
-                //$('#currentTemp').text('Temp: ' + temp + '\u00B0 F');
-                //$('#currentWind').text('Wind: ' + windSpeed.speed + ' MPH');
-                //$('#currentHumidity').text('Humidity: ' + weatherData.humidity + ' %');
-                //$('#currentIcon').attr('src', iconUrl);
-                
-            }
 
         })
         .catch(function () {
@@ -115,14 +108,13 @@ function defaultWeather(currentCity, lat, lon) {
             var windSpeed = dataList[0].wind;
             var dataIcon = dataList[0].weather;
             var iconUrl = 'http://openweathermap.org/img/wn/' + dataIcon[0].icon + '@2x.png';
-
+            $('#currentIcon').attr('src', iconUrl);
             //console.log(iconUrl);
             var temp = Math.round(kevlinToFahrenheit(weatherData.temp)).toFixed(2);
             $('#currentTemp').text('Temp: ' + temp + '\u00B0 F');
             $('#currentWind').text('Wind: ' + windSpeed.speed + ' MPH');
             $('#currentHumidity').text('Humidity: ' + weatherData.humidity + ' %');
 
-            $('#currentIcon').attr('src', iconUrl);
 
             for (var i = 0; i <= data.length; i++) {
 
@@ -133,10 +125,11 @@ function defaultWeather(currentCity, lat, lon) {
         .catch(function () {
             // catch any errors
         });
-        
+
 }
 defaultWeather(currentCity, lat, lon);
 FiveDayWeather(currentCity, lat, lon);
+
 // Populate city name, state and country searching by city name
 function searchGeoByCity(city) {
     var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=5&appid=' + apiKey;
@@ -187,8 +180,8 @@ function getGeoByCity(selectedCity) {
 // Search button click
 searchBtn.on('click', function () {
     searchGeoByCity(searchText.val());
-    FiveDayWeather(currentCity,lat,lon);
-    $('#prevSearch').append('<input type="button" class="w-100 mb-2 btn-danger" id="clearSearch" value="Clear Search">');
+    FiveDayWeather(currentCity, lat, lon);
+    
 });
 
 // Selecct change status
@@ -197,27 +190,34 @@ cityList.on('change', function (e) {
 
     getGeoByCity(text);
     defaultWeather(text, lat, lon);
+    
 
     addToLocalStorage(text);
-    getLocalStorageData(text);
+
 });
 
 
 // Store search in localStorage
 function addToLocalStorage(text) {
-    $('#prevSearch').append('<input type="button" class="w-100 mb-2" value="' + text + '">');
-    localStorage.setItem(text, text);
-    
+    var id = localStorage.length;
+    localStorage.setItem(id+1, text);
+    $('#prevSearch').append('<input type="button" class="w-100 mb-2" value="' + localStorage.getItem(id+1) + '">');
 }
+//localStorage.clear();
 //Clear localStorage
-$('#clearSearch').on('click', function(){
+$('#clearSearch').on('click', function () {
+    console.log(localStorage.length);
     localStorage.clear();
-    getLocalStorageData(text);
+    $('#prevSearch').empty();
 })
 // Get previously search results
-function getLocalStorageData(text) {
-    if (localStorage.getItem(text) !== null) {
-        $('#prevSearch').append('<input type="button" class="w-100 mb-2" value="' + localStorage.getItem(text) + '">');
+function getLocalStorageData() {
+    if (localStorage.length > 0) {
+        $('#prevSearch').append('<input type="button" class="w-100 mb-2 btn-danger" id="clearSearch" value="Clear Search">');
+        for (var x= 1; x <= localStorage.length; x++) {
+            $('#prevSearch').append('<input type="button" class="w-100 mb-2" value="' + localStorage.getItem(x) + '">');
+            
+        }
     }
 }
 getLocalStorageData();
