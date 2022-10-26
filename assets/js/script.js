@@ -17,7 +17,7 @@ const kevlinToFahrenheit = tempKel => tempKel - 255.372; // -255.372 kelvin = 0 
 // Display 5 days of data
 function FiveDayWeather(selectedCity, strLat, strLon) {
 
-    var weatherUrl = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + strLat + '&lon=' + strLon + '&exclude=hourly,daily' + '&appid=' + apiKey;
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + strLat + '&lon=' + strLon + '&exclude=hourly,daily' + '&appid=' + apiKey;
 
     fetch(weatherUrl)
         .then(function (resp) {
@@ -42,7 +42,7 @@ function FiveDayWeather(selectedCity, strLat, strLon) {
 
                     var dataIcon = dataList[i].weather;
 
-                    var iconUrl = 'http://openweathermap.org/img/wn/' + dataIcon[0].icon + '@2x.png';
+                    var iconUrl = 'https://openweathermap.org/img/wn/' + dataIcon[0].icon + '@2x.png';
 
                     var temp = Math.round(kevlinToFahrenheit(weatherData.temp)).toFixed(2);
                     var dayDate = moment(new Date(dataList[i].dt_txt)).format('dddd');
@@ -73,7 +73,7 @@ function defaultWeather(selectedCity, strLat, strLon) {
     var city = selectedCity.split(',');
     currentCityinfo.text(city[0] + ',' + city[1] + ', ' + todayDate);
 
-    var weatherUrl = 'http://api.openweathermap.org/data/2.5/forecast?lat=' + strLat + '&lon=' + strLon + '&appid=' + apiKey;
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + strLat + '&lon=' + strLon + '&appid=' + apiKey;
 
     fetch(weatherUrl)
         .then(function (resp) {
@@ -85,7 +85,7 @@ function defaultWeather(selectedCity, strLat, strLon) {
             var weatherData = dataList[0].main;
             var windSpeed = dataList[0].wind;
             var dataIcon = dataList[0].weather;
-            var iconUrl = 'http://openweathermap.org/img/wn/' + dataIcon[0].icon + '@2x.png';
+            var iconUrl = 'https://openweathermap.org/img/wn/' + dataIcon[0].icon + '@2x.png';
             $('#currentIcon').attr('src', iconUrl);
 
             var temp = Math.round(kevlinToFahrenheit(weatherData.temp)).toFixed(2);
