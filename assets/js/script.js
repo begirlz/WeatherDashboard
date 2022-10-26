@@ -28,10 +28,28 @@ function FiveDayWeather(currentCity, lat, lon){
         })
         .then(function (data) {
 
+            console.log(data);
+            var dataList = data.list;
 
-            for (var i = 0; i <= 5; i++) {
+                //console.log(dataList[0].dt_txt);
+                //var m = moment(new Date(dataList[0].dt_txt));
+                //console.log(m.format('DD'));//todayDate
+                //console.log(moment(new Date(todayDate)).format('DD'));
+                var tDate = moment(new Date(todayDate)).format('DD');
+
+            for (var i = 0; i <dataList.length; i++) {
+                var nextDate = moment(new Date(dataList[i].dt_txt)).format('DD');
+                if (nextDate !== tDate) {
+
+                    var weatherData = dataList[i].main;
+                    var windSpeed = dataList[i].wind;
+                    var dataIcon = dataList[i].weather;
+
+                    console.log(nextDate);
+                    tDate=nextDate;
+                }
+
                 
-                var dataList = data.list;
                 var weatherData = dataList[0].main;
                 var windSpeed = dataList[0].wind;
                 var dataIcon = dataList[0].weather;
@@ -39,17 +57,19 @@ function FiveDayWeather(currentCity, lat, lon){
     
                 //console.log(data);
                 var temp = Math.round(kevlinToFahrenheit(weatherData.temp)).toFixed(2);
-                console.log(dataList);
+                
                 $('#' + i).append($('<div>').text('Temp: ' + temp + '\u00B0 F'));
-                //$('#currentTemp').text('Temp: ' + temp + '\u00B0 F');
-                $('#currentWind').text('Wind: ' + windSpeed.speed + ' MPH');
-                $('#currentHumidity').text('Humidity: ' + weatherData.humidity + ' %');
-                $('#currentIcon').attr('src', iconUrl);
+                $('#' + i).append($('<div>').text('Wind: ' + windSpeed.speed + ' MPH'));
+                $('#' + i).append($('<div>').text('Humidity: ' + weatherData.humidity + ' %'));
+                $('#' + i).append($('<div>').text('Temp: ' + temp + '\u00B0 F'));
 
+                //$('#currentTemp').text('Temp: ' + temp + '\u00B0 F');
+                //$('#currentWind').text('Wind: ' + windSpeed.speed + ' MPH');
+                //$('#currentHumidity').text('Humidity: ' + weatherData.humidity + ' %');
+                //$('#currentIcon').attr('src', iconUrl);
                 
             }
 
-            //drawWeather(data);
         })
         .catch(function () {
             // catch any errors
@@ -71,7 +91,6 @@ function getWeatherByGeo(lat, lon) {
                 divTodayForcast.append($('<option>').val(i + 1).text(data[i].name + ',' + data[i].state + ',' + data[i].country));
             }
 
-            //drawWeather(data);
         })
         .catch(function () {
             // catch any errors
@@ -97,11 +116,12 @@ function defaultWeather(currentCity, lat, lon) {
             var dataIcon = dataList[0].weather;
             var iconUrl = 'http://openweathermap.org/img/wn/' + dataIcon[0].icon + '@2x.png';
 
-            //console.log(data);
+            //console.log(iconUrl);
             var temp = Math.round(kevlinToFahrenheit(weatherData.temp)).toFixed(2);
             $('#currentTemp').text('Temp: ' + temp + '\u00B0 F');
             $('#currentWind').text('Wind: ' + windSpeed.speed + ' MPH');
             $('#currentHumidity').text('Humidity: ' + weatherData.humidity + ' %');
+
             $('#currentIcon').attr('src', iconUrl);
 
             for (var i = 0; i <= data.length; i++) {
@@ -109,7 +129,6 @@ function defaultWeather(currentCity, lat, lon) {
                 divTodayForcast.append($('<option>').val(i + 1).text(data[i].name + ',' + data[i].state + ',' + data[i].country));
             }
 
-            //drawWeather(data);
         })
         .catch(function () {
             // catch any errors
