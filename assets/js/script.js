@@ -112,7 +112,7 @@ window.onload = function(){
 
 // Populate city name, state and country searching by city name
 function searchGeoByCity(city) {
-    var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=5&appid=' + apiKey;
+    var geoUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=5&appid=' + apiKey;
     fetch(geoUrl)
         .then(function (resp) {
             return resp.json()
@@ -133,7 +133,7 @@ function searchGeoByCity(city) {
 }
 
 function getGeoByCity(selectedCity, strLat, strLon) {
-    var geoUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + selectedCity + '&limit=5&appid=' + apiKey;
+    var geoUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + selectedCity + '&limit=5&appid=' + apiKey;
     fetch(geoUrl)
         .then(function (resp) {
             return resp.json()
