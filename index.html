@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forcast</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
+<body>
+    <header class="bg-primary w-100 p-2 text-center">
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main class="row col-10">
+        <div class="container-fluid col-4 pr-lg-5" id="searchContainer">
+                <form id="searchForm">
+                    <label for="searchText">
+                        <span class="font-weight-bold align-content-center justify-content-center h3">Search for a
+                            City:</span>
+                    </label>
+                    <input type="text" placeholder="City..." id="searchText" class="w-100 mb-2">
+                    <select id="cityList" type="text" class="w-100 mb-2">
+                        <option value="0" disabled selected>Select your option</option>
+                    </select>
+                    <input type="button" value="Search" id="searchBtn" class="w-100 mb-2 bg-secondary">
+                </form>
+                <hr>
+                <div id="prevSearch">
+                </div>
+        </div>
+        <div class="container-fluid col-8" id="forcastContent">
+
+                <div class="row w-100 h-100 p-4 text-left" id="todayForcast">
+                    <h2 id="currentCityinfo"><img id="currentIcon"></h2>
+                    <div id="currentTemp" class="row w-100"></div>
+                    <div id="currentWind" class="row w-100"></div>
+                    <div id="currentHumidity" class="row w-100"></div>
+                </div>
+                <div class="row" id="fiveDayForcast">
+                    <h1>5-Day Forcast:</h1>
+                    <div class="row w-100">
+                        <div class="col-3 w-100" id="1"></div>
+                        <div class="col-3 w-100" id="2"></div>
+                        <div class="col-3 w-100" id="3"></div>
+                        <div class="col-3 w-100" id="4"></div>
+                        <div class="col-3 w-100" id="5"></div>
+                    </div>
+                    
+                </div>
+
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
